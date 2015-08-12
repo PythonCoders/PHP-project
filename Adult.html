@@ -1,60 +1,211 @@
-<?php
-require('WriteHTML.php');
-include('mail_fin_adult.php');
-include('temp_adult.php');
+<?xml version="1.0" encoding="utf-8"?>
 
-$name = $_POST['Name'];
-$date = $_POST['Date'];
-$t=time();
-$day= date("Y-m-d",$t);
-$pdfname = $name.$day.".pdf";
-$total = $_POST['total'];
-$pdf=new PDF_HTML();
- 
-$pdf->AliasNbPages();
-$pdf->SetAutoPageBreak(true, 20);
- 
-$pdf->AddPage();
-$pdf->SetFont('Arial','B',20);
-$pdf->WriteHTML('<para><h1>PATIENT HEALTH QUESTIONAIRE: PHQ-9</em></h1><br></para>');
- 
-$pdf->SetFont('Arial','',18);
-$htmlTable1='
-<TABLE>
-<TR>
-<br>
-<br>
-<TD>Name:'.$_POST['Name'].'<br><br></TD>
-<TD>Date:'.$_POST['Date'].'<br><br><br><br></TD>
-</TR>
-</TABLE>
-<br>
-<pre>
-<br>
-1. Little interest or pleasure in doing things-'.$_POST['Q2'].'<br><br>
-2. Feeling down or depressed or hopeless-'.$_POST['Q1'].'<br><br>
-3. Trouble falling or staying asleep, or sleeping too much-'.$_POST['Q3'].'<br><br>
-4. Feeling tired or having little energy-'.$_POST['Q4'].'<br><br>
-5. Poor appetite or overeating-'.$_POST['Q5'].'<br><br>
-6. Feeling bad about yourself ot that you are a failure or have <br><br>
-   let yourself or your family down-'.$_POST['Q6'].'<br><br>
-7. Trouble concentrating on things such as reading <br><br>
-   newspaper or watching TV-'.$_POST['Q7'].'<br><br>
-8. Moving or speaking so slowly that other people could have<br><br>
-   noticed? Or the oppsite, being so fidgety or restless that<br><br>
-   you have been moving around a lot more than usual-'.$_POST['Q8'].'<br><br>
-9. Thoughts that you would be better off dead or of hurting<br><br>
-   yourself in some way-'.$_POST['Q9'].'<br><br></pre>';
-$pdf->WriteHTML("<br><br><br>$htmlTable1");
-$pdf->SetFont('Arial','B',18);
+<!DOCTYPE html PUBLIC "-//w3//DTD XHTML 1.1//EN"
+"http//www.w3.org/TR/xhtml1/DTD/xhtml1.dtd">
 
-$pdf->WriteHTML("<br>Total score is = $total");
+<html xlmns = "http://www.w3.org/1999/xhtml">
+	<head>
+		<title>PHQ-9</title>
+		<style>
+			body{
+				background-color:aqua;
+				font-family:"Times New Roman";
+				text-align:"center";
+			}
+			table, th, td {
+				font-size: 18px;
+			    border: 0px solid black;
+			    border-collapse: collapse;
+			}
+			th{
+			    padding: 5px;
+			    text-align: left;
+			}
+			td.ques {
+			    text-align: center;
+			}
+			td, th {
+			    border:none;
+			}
+			tr.only{
+				border:0px solid black;
+
+			}
+			p {
+				font-size:0;  
+			}
+			span { 
+				width:50%; 
+				display:inline-block; 
+			}
+			span.next_buttons { 
+				text-align:right; 
+			}
+			span a { 
+				font-size:16px; 
+			}
+			#submit {
+				font-size: 20px;
+				
+			}
+			#submit_button {
+				display: inline-block;
+				width: 140px;
+				height: 75px;
+				float: right;
+				position: relative;
+  				left: -50%;
+			}
+		</style>
+		<script type="text/javascript" src="ADULT.js">
+		</script>
+	</head>
+
+	<body>
+		<h1 align="center"></br></br></br>PATIENT HEALTH QUESTIONAIRE: PHQ-9 <em>(Adult)</em></h1>
+		<p align="center">
+			<form action="pdf_adult.php" name = "FormForAdults" id="AduForm" method="post">
+				<LABEL>Name<input type="text" id="adultName" name="Name"/></LABEL>
+				<LABEL></br></br>Date<input type="text" id="date" name="Date"/></LABEL>
+				<pre>Over the last two weeks, how often have you been bothered by any of these problems?
+<em>(Select appropriate options)</em>
+				</pre>
+<p><span class="next_buttons"><a href="#p1">NEXT</a></span></p>
+
+				
+				</br></br></br></br></br></br></br></br></br></br></br></br></br></br>
+				</br></br></br></br></br></br></br></br></br></br></br></br><p id="p1"></p>
+				<table border = '1' cellpadding="45" style="width:100%">
+					<tr class="only">
+						<th> </th>
+						<th>Not at all</th>
+						<th>Several days</th>
+						<th>More than half the days</th>
+						<th>Nearly everyday</th>
+					</tr>
+					<tr border = "0">
+						<th width="55%">1. Little interest or pleasure in doing things</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q1" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q1" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q1" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q1" id="Everyday" value="3"/></LABEL>
+					</tr>
+					<tr border = "0">
+						<th width="100">2. Feeling down or depressed or hopeless</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q2" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q2" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q2" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q2" id="Everyday" value="3"/></LABEL>
+					</tr>
+					<tr border = "0">
+						<th width="100">3. Trouble falling or staying asleep, or sleeping too much</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q3" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q3" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q3" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q3" id="Everyday" value="3"/></LABEL>
+					</tr>
+					
+				</table>
+				<p><span class="next_buttons"><a href="#p2">NEXT</a></span></p>
+				
+
+				</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br><p id="p2"></p>
+				<table border = '1' cellpadding="45" style="width:100%" id="table2">
+					<tr class="only">
+						<th> </th>
+						<th>Not at all</th>
+						<th>Several days</th>
+						<th>More than half the days</th>
+						<th>Nearly everyday</th>
+					</tr>
+					<tr border = "0">
+						<th width="55%">4. Feeling tired or having little energy</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q4" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q4" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q4" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q4" id="Everyday" value="3"/></LABEL>
+					</tr>
+					<tr border = "0">
+						<th width="100">5. Poor appetite or overeating</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q5" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q5" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q5" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q5" id="Everyday" value="3"/></LABEL>
+					</tr>
+					<tr border = "0">
+						<th width="100">6. Feeling bad about yourself ot that you are a failure or have let yourself or your family down</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q6" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q6" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q6" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q6" id="Everyday" value="3"/></LABEL>
+					</tr>
+					
+				</table>
+				<p><span class="next_buttons"><a href="#p3">NEXT</a></span></p>
+
+				
+				</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br><p id="p3"></p>
 
 
-$pdf->Output("./pdfs/".$pdfname);
 
-include('xml_adult.php');
-
-?>
-
-
+				<table border = '1' cellpadding="45" style="width:100%" id="table3">
+					<tr class="only">
+						<th> </th>
+						<th>Not at all</th>
+						<th>Several days</th>
+						<th>More than half the days</th>
+						<th>Nearly everyday</th>
+					</tr>
+					<tr border = "0">
+						<th width="55%">7. Trouble concentrating on things such as reading newspaper or watching TV</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q7" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q7" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q7" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q7" id="Everyday" value="3"/></LABEL>
+					</tr>
+					<tr border = "0">
+						<th width="100">8. Moving or speaking so slowly that other people could have noticed? Or the oppsite, being so fidgety or restless that you have been moving around a lot more than usual</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q8" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q8" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q8" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q8" id="Everyday" value="3"/></LABEL>
+					</tr>
+					<tr border = "0">
+						<th width="100">9. Thoughts that you would be better off dead or of hurting yourself in some way</th>
+						<td class="ques"><LABEL>0<input type="radio" name="Q9" id="NotAtAll" value="0" checked="checked"/></LABEL>
+						<td class="ques"><LABEL>1<input type="radio" name="Q9" id="SeveralDays" value="1"/></LABEL>
+						<td class="ques"><LABEL>2<input type="radio" name="Q9" id="MoreThanHalf" value="2"/></LABEL>
+						<td class="ques"><LABEL>3<input type="radio" name="Q9" id="Everyday" value="3"/></LABEL>
+					</tr>
+					
+				</table>
+				<p><span class="next_buttons"><a href="#p4">NEXT</a></span></p>
+			</br></br></br></br></br></br></br></br></br></br></br>
+				</br></br></br></br></br>	</br></br></br><p id="p4"></p>
+				<table border='1' style="width:100%">
+					<tr><td><pre>If you checked any of the problems, how difficult</br></pre><pre>have these problems made it for you to do your work, take care of things</br></pre><pre>at home or get along with other people?</br></pre>
+<LABEL><input type="radio" name="endQ" id="NotDifAtAll" value="0" checked="checked"/>Not difficult at all</br></LABEL>   <LABEL></br><input type="radio" name="endQ" id="SomewhatDiff" value="1"/>Somewhat difficult</br></LABEL>   <LABEL></br><input type="radio" name="endQ" id="veryDiff" value="2"/>Very difficult</br></LABEL>   <LABEL></br><input type="radio" name="endQ" id="ExtremeDiff" value="3"/>Extremely difficult</br></br></LABEL>
+</pre></td></tr>
+				</table>
+				<table border = '1' style="width:100%">
+					
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						
+						<td align="left">Totalscore:<input type="text" id="total" name="total" size="2"/></td>
+					</tr>
+				</table>
+				</br></br></br>
+						<button id="submit_button" onclick = ComputeTotal() ><p id="submit">submit</p></button>
+						</br></br></br></br></br></br></br></br></br></br></br></br>
+						</br></br></br></br></br></br></br></br></br></br></br>
+						  	 	</br></br>
+			</form>
+		</p>
+	</body>
+</html>
